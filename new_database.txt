@@ -1,0 +1,92 @@
+
+### As root user
+
+show databases;
+
+CREATE DATABASE springbatchdemo;
+
+use springbatchdemo;
+
+CREATE USER 'DEMODBOWNER'@'localhost' IDENTIFIED BY '^123Spring';
+
+CREATE USER 'APPUSER'@'localhost' IDENTIFIED BY '^789Summer';
+
+### Verify new users are created
+SELECT User, Host FROM mysql.user;
+
+
+### Grant Permissions to new users
+
+GRANT ALL ON springbatchdemo.* TO 'DEMODBOWNER'@'localhost';
+
+GRANT DELETE, EXECUTE, INSERT, SELECT, UPDATE ON springbatchdemo.* TO 'APPUSER'@'localhost';
+
+FLUSH PRIVILEGES;
+
+
+GRANT FILE ON *.* TO 'DEMODBOWNER'@'localhost';
+GRANT FILE ON *.* TO 'APPUSER'@'localhost';
+
+mysql -u DEMODBOWNER -p --local-infile=1
+
+LOAD DATA LOCAL INFILE '/home/sar/mysql-ce-config/tempdata.txt'  INTO TABLE TEMP_JOB_COUNT FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+
+
+### Verify permissions on new users
+
+SHOW GRANTS FOR 'DEMODBOWNER'@'localhost';
+
+SHOW GRANTS FOR 'APPUSER'@'localhost';
+
+
+
+show databases;
+
+
+use springbatchdemo;
+
+SELECT * FROM JOB_COUNT;
+
+SHOW TABLES;
+
+LOAD DATA LOCAL INFILE '/home/sar/mysql-ce-config/tempdata.txt' 
+INTO TABLE JOB_COUNT
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+(NODE, JOB_NAME, LOG_DATE, MATCH_COUNT);
+
+/* IGNORE 1 ROWS */
+
+
+show databases;
+
+use springbatchdemo;
+
+CREATE TABLE IF NOT EXISTS JOB_COUNT (
+    JOB_ID INT AUTO_INCREMENT PRIMARY KEY,
+    NODE VARCHAR(10),
+    JOB_NAME VARCHAR(20),
+    LOG_DATE VARCHAR(10),
+    MATCH_COUNT INT,
+    CREATE_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+SELECT * FROM JOB_COUNT;
+
+SHOW TABLES;
+
+CREATE TABLE IF NOT EXISTS TEMP_JOB_COUNT (
+    NODE VARCHAR(10),
+    JOB_NAME VARCHAR(20),
+    LOG_DATE VARCHAR(10),
+    MATCH_COUNT VARCHAR(10)
+);
+
+drop table TEMP_JOB_COUNT;
+
+
+SELECT * FROM TEMP_JOB_COUNT;
+
+
+insert into TEMP_JOB_COUNT VALUES ('CLDR01','SPARKSCALA7324','20180510','23');
