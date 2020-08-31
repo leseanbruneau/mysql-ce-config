@@ -73,3 +73,7 @@ To change this setting, in menu
 Uncheck "Safe Updates" checkbox
 
 
+SHOW GLOBAL VARIABLES LIKE 'local_infile';
+
+SET GLOBAL local_infile = 1;
+
