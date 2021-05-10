@@ -2,13 +2,16 @@ MySQL Installation - Ubuntu 20.04
 
 sudo apt-get install mysql-server
 
+sudo apt-get install mysql-client
+
 After MySQL Installation, configure security
 
 sudo mysql_secure_installation
 
 Use the following options to configure on test machine
 
-Use low security
+No to VALIDATE PASSWORD COMPONENT
+    - Use low security
 Enter a new password for MYSQL root user
 Remove Anonymous users
 Disallow login remotely
