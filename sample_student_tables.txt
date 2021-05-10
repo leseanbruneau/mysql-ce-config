@@ -1,0 +1,54 @@
+
+-- NOTE:  
+-- As root user, create database:  
+--  schooldb
+
+-- As root user, create two user ids:
+--  CREATE USER 'blogdbowner'@'localhost' IDENTIFIED BY 'password';
+--  CREATE USER 'appuser'@'localhost' IDENTIFIED BY 'password';
+--  
+--   NOTE: password should be changed to mySQL database password
+
+
+-- As root user, provide the following permissions:  
+--  GRANT ALL ON schooldb.* TO 'blogdbowner'@'localhost';
+--  GRANT DELETE, EXECUTE, INSERT, SELECT, UPDATE ON schooldb.* TO 'appuser'@'localhost';
+
+
+use schooldb;
+
+CREATE TABLE IF NOT EXISTS student (
+    student_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(20),
+    last_name VARCHAR(20),
+    phone_number VARCHAR(10),
+    email VARCHAR(30),
+    major VARCHAR(30)
+);
+
+
+CREATE TABLE IF NOT EXISTS student_course (
+    reg_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    course_id VARCHAR(10),
+    date_enroll DATE DEFAULT (CURRENT_DATE),
+    date_complete DATE,
+    FOREIGN KEY (student_id) REFERENCES student(student_id)
+);
+
+
+--  Couple sample inserts to test with
+--
+-- INSERT INTO student (first_name, last_name, phone_number, email, major) VALUES ('PAUL','JOHNSON','6515550001','pjohn123@school.edu','PHYSICS');
+-- INSERT INTO student (first_name, last_name, phone_number, email, major) VALUES ('JOE','SWANSON','6125559821','jswan872@school.edu','CHEMISTRY');
+
+-- INSERT INTO student_course (student_id, course_id) VALUES (1, 610);
+-- INSERT INTO student_course (student_id, course_id) VALUES (1, 625);
+-- INSERT INTO student_course (student_id, course_id) VALUES (1, 630);
+ 
+-- INSERT INTO student_course (student_id, course_id) VALUES (2, 610);
+-- INSERT INTO student_course (student_id, course_id) VALUES (2, 720);
+
+
+
+
