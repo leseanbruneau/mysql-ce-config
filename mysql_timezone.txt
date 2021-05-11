@@ -1,0 +1,13 @@
+As root
+
+
+SELECT COUNT(*) FROM mysql.time_zone_name;
+
+select @@GLOBAL.time_zone, @@SESSION.time_zone;
+
+SELECT COUNT(*) FROM mysql.time_zone_name;
+
+select @@system_time_zone;
+
+
+

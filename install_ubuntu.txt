@@ -80,3 +80,9 @@ SHOW GLOBAL VARIABLES LIKE 'local_infile';
 
 SET GLOBAL local_infile = 1;
 
+
+show variables like 'sql_mode';
+
+set sql_mode='';
+
+
